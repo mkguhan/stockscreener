@@ -4,7 +4,7 @@ Created on Fri Feb 14 20:45:45 2020
 
 @author: Admin
 """
-
+ 
 import pandas as pd
 import backtrader as bt
 scripts = ["ADANIPORTS", "BHARTIARTL","UPL", "AXISBANK", "HDFC", "ASIANPAINTS","HINDUNILVR", "TITAN"]
