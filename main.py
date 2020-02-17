@@ -9,7 +9,7 @@ import pandas as pd
 import backtrader as bt
 import datetime
 
-scripts = ["ADANIPORTS", "BHARTIARTL","UPL", "AXISBANK", "HDFC", "ASIANPAINT","HINDUNILVR", "TITAN","TCS", "ZEEL", "TATASTEEL","HINDALCO","HDFCBANK", "ICICIBANK","INFRATEL","INDUSINDBK","HCLTECH","TECHM","INFY","DRREDDY"]
+#scripts = ["ADANIPORTS", "BHARTIARTL","UPL", "AXISBANK", "HDFC", "ASIANPAINT","HINDUNILVR", "TITAN","TCS", "ZEEL", "TATASTEEL","HINDALCO","HDFCBANK", "ICICIBANK","INFRATEL","INDUSINDBK","HCLTECH","TECHM","INFY","DRREDDY"]
 scripts = ["HEROMOTOCO","TCS","INFY","SBIN","HDFCBANK","BPCL","KOTAKBANK","UPL","TATASTEEL","HCLTECH","TECHM","SUNPHARMA","ASIANPAINT","LT","AXISBANK","RELIANCE","INDUSINDBK","ADANIPORTS","HDFC","GRASIM","BHARTIARTL","TITAN","HINDUNILVR","ICICIBANK","CIPLA"]
 
 def get_historical_data(script):
@@ -28,7 +28,7 @@ def is_shooting_star(data):
     close = data[3]
     high = data[1]
     low = data[2] 
-    RSI = data[4]
+    #RSI = data[4]
     #print("Open: {} High {} Low {} Close{} Time {}".format(open,high,low,close, time))
     #Lower Wick Calculation
     lower_wick = open - low
@@ -41,10 +41,19 @@ def is_shooting_star(data):
     #Body Calculation
     Body = close - open
     #print("Low Wick: {} ;Body {} ; Upper Wick {}".format(lower_wick,Body,upper_wick))
-    if open >= low and open < close and (lower_wick == 0 or lower_wick < low_wick_per) and upper_wick > (1.25 * Body) and lower_wick < Body:  
-        return True
-    else:
-        return False
+    if open >= low and open < close:
+      if lower_wick == 0 or lower_wick < low_wick_per:
+          if upper_wick > (1.25 * Body):
+              if lower_wick < Body:  
+                 return True
+              else:
+                  return False
+          else:
+              return False
+      else:
+          return False
+    else: 
+          return False
      
 def get_rsi_14(script):
     alpha_url = "https://www.alphavantage.co/query?function=RSI&symbol=NSE:{}&interval=15min&time_period=14&series_type=close&apikey=FIKNV2QYP8FRIOPF&datatype=csv".format(script) 
@@ -63,7 +72,7 @@ def combine_ohlc_function(ohlc, rsi):
 
 if __name__ == "__main__" :
         enddate = datetime.datetime.now().date()
-        startdate = datetime.datetime(2020, 2, 1 ).date()
+        startdate = datetime.datetime(2020, 1, 8 ).date()
         
         while startdate <= enddate :
             print("Processing the Data for date {}......".format(startdate))
@@ -77,7 +86,7 @@ if __name__ == "__main__" :
                 if startdate.weekday() < 5 and len(isdata_avlbe) > 0:
                   df = data[(data['date'] == startdate)]
                   #print(df)
-                  data_915=[df.iloc[-1]['open'],df.iloc[-1]['high'],df.iloc[-1]['low'],df.iloc[-1]['close'],df.iloc[-1]['RSI']]
+                  data_915=[df.iloc[-1]['open'],df.iloc[-1]['high'],df.iloc[-1]['low'],df.iloc[-1]['close']]
                   if is_shooting_star(data_915):
                       print("Date : {} :  {}".format(startdate,script))
             startdate = startdate + datetime.timedelta(days = 1)
