@@ -22,7 +22,7 @@ def is_shooting_star(data):
     open = data[0]
     close = data[3]
     high = data[1]
-    low = data[2]
+    low = data[2] 
     
     if open > low and open < close:
       #Lower Wick Calculation
