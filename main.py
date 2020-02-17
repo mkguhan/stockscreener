@@ -79,7 +79,7 @@ if __name__ == "__main__" :
             for script in scripts:
                 #print("Stock : {}".format(script))
                 ohlc_data = get_historical_data(script)
-                rsi_data = get_rsi_14(script)
+                #rsi_data = get_rsi_14(script)
                 data = combine_ohlc_function(ohlc_data,rsi_data)
                 data = ohlc_data
                 isdata_avlbe = data[(data['date'] == startdate)]
