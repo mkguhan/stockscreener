@@ -44,7 +44,8 @@ def is_shooting_star(data):
     if open >= low and open < close:
       if lower_wick == 0 or lower_wick < low_wick_per:
           if upper_wick > (1.25 * Body):
-              if lower_wick < Body:  
+              if lower_wick < Body:
+                 print("Lower Wick: {} ;Body {} ; Upper Wick {}".format(lower_wick,Body,upper_wick))  
                  return True
               else:
                   return False
@@ -80,7 +81,7 @@ if __name__ == "__main__" :
                 #print("Stock : {}".format(script))
                 ohlc_data = get_historical_data(script)
                 #rsi_data = get_rsi_14(script)
-                data = combine_ohlc_function(ohlc_data,rsi_data)
+                #data = combine_ohlc_function(ohlc_data,rsi_data)
                 data = ohlc_data
                 isdata_avlbe = data[(data['date'] == startdate)]
                 if startdate.weekday() < 5 and len(isdata_avlbe) > 0:
